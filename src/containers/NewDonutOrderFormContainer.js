@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import InputField from '../components/InputField'
-import { handleNameChange } from '../modules/donuts'
+import { handleNameChange, handleFlavorChange } from '../modules/donuts'
 
 class NewDonutOrderFormContainer extends Component {
   constructor(props) {
@@ -54,7 +54,8 @@ class NewDonutOrderFormContainer extends Component {
             label='Flavor'
             type='text'
             name='newFlavor'
-            handleChange={this.props.handleFieldChange}
+            value={this.props.flavor}
+            handleChange={this.props.handleFlavorChange}
           />
           <input type='submit' />
         </form>
@@ -66,6 +67,7 @@ class NewDonutOrderFormContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     name: state.donuts.name,
+    flavor: state.donuts.flavor,
     donutOrderList: state.donuts.donutOrderList
   }
 }
@@ -73,7 +75,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addNewDonut: (donuts) => dispatch(addNewDonut(newDonut)),
-    handleNameChange: (event) => dispatch(handleNameChange(event))
+    handleNameChange: (event) => dispatch(handleNameChange(event)),
+    handleFlavorChange: (event) => dispatch(handleFlavorChange(event))
   }
 }
 

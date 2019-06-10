@@ -16,7 +16,8 @@ const initialState = {
       flavor: 'The biggest coffee roll ever'
     }
   ],
-  name: ''
+  name: '',
+  flavor: ''
 }
 
 const HANDLE_NAME_CHANGE = 'HANDLE_NAME_CHANGE'
@@ -28,10 +29,21 @@ const handleNameChange = event => {
   }
 }
 
+const HANDLE_FLAVOR_CHANGE = 'HANDLE_FLAVOR_CHANGE'
+const handleFlavorChange = event => {
+  const newFlavor = event.target.value
+  return {
+    type: HANDLE_FLAVOR_CHANGE,
+    newFlavor
+  }
+}
+
 const donuts = (state = initialState, action) => {
   switch(action.type) {
     case HANDLE_NAME_CHANGE:
       return { ...state, name: action.newName }
+    case HANDLE_FLAVOR_CHANGE:
+      return { ...state, flavor: action.newFlavor }
     default:
       return state
   }
@@ -41,5 +53,6 @@ const donuts = (state = initialState, action) => {
 
 export {
   donuts,
-  handleNameChange
+  handleNameChange,
+  handleFlavorChange
 };
