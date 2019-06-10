@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
 
 import OrderTile from './OrderTile';
 
@@ -23,4 +24,13 @@ const DonutOrdersList = props => {
   )
 }
 
-export default DonutOrdersList;
+const mapStateToProps = (state) => {
+  return {
+    donutOrderList: state.donuts.donutOrderList
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  null
+) (DonutOrdersList)
