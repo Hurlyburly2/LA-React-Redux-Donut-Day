@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import InputField from '../components/InputField'
+import { handleNameChange } from '../modules/donuts'
 
 class NewDonutOrderFormContainer extends Component {
   constructor(props) {
@@ -26,7 +27,9 @@ class NewDonutOrderFormContainer extends Component {
     const newId = this.calculateNewId()
     debugger
     const newDonut = {
-      
+      id: newId,
+      name: iunno,
+      flavor: iunno
     }
     // Your code here
     // First, prepare a new donut order object
@@ -43,6 +46,8 @@ class NewDonutOrderFormContainer extends Component {
             label='Your Name'
             type='text'
             name='newName'
+            value={this.props.name}
+            handleChange={this.props.handleNameChange}
           />
           <InputField
             key='newFlavor'
@@ -60,13 +65,15 @@ class NewDonutOrderFormContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    name: state.donuts.name,
     donutOrderList: state.donuts.donutOrderList
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addNewDonut: (donuts) => dispatch(addNewDonut(newDonut))
+    addNewDonut: (donuts) => dispatch(addNewDonut(newDonut)),
+    handleNameChange: (event) => dispatch(handleNameChange(event))
   }
 }
 
