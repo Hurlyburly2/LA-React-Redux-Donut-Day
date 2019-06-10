@@ -23,7 +23,11 @@ class NewDonutOrderFormContainer extends Component {
 
   handleFormSubmit(event) {
     event.preventDefault()
-
+    const newId = this.calculateNewId()
+    debugger
+    const newDonut = {
+      
+    }
     // Your code here
     // First, prepare a new donut order object
     // Then, add that object to the store, and clear the form
@@ -54,4 +58,19 @@ class NewDonutOrderFormContainer extends Component {
   }
 };
 
-export default NewDonutOrderFormContainer;
+const mapStateToProps = (state) => {
+  return {
+    donutOrderList: state.donuts.donutOrderList
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addNewDonut: (donuts) => dispatch(addNewDonut(newDonut))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewDonutOrderFormContainer);
