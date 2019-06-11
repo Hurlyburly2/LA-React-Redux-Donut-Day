@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import InputField from '../components/InputField'
-import { handleNameChange, handleFlavorChange } from '../modules/donuts'
+import { handleNameChange, handleFlavorChange, addNewDonut, clearForm } from '../modules/donuts'
 
 class NewDonutOrderFormContainer extends Component {
   constructor(props) {
@@ -25,15 +25,13 @@ class NewDonutOrderFormContainer extends Component {
   handleFormSubmit(event) {
     event.preventDefault()
     const newId = this.calculateNewId()
-    debugger
     const newDonut = {
       id: newId,
-      name: iunno,
-      flavor: iunno
+      name: this.props.name,
+      flavor: this.props.flavor
     }
-    // Your code here
-    // First, prepare a new donut order object
-    // Then, add that object to the store, and clear the form
+    this.props.addNewDonut(newDonut)
+    this.props.clearForm()
   }
 
   render() {
@@ -74,9 +72,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addNewDonut: (donuts) => dispatch(addNewDonut(newDonut)),
+    addNewDonut: (donuts) => dispatch(addNewDonut(donuts)),
     handleNameChange: (event) => dispatch(handleNameChange(event)),
-    handleFlavorChange: (event) => dispatch(handleFlavorChange(event))
+    handleFlavorChange: (event) => dispatch(handleFlavorChange(event)),
+    clearForm: () => dispatch(clearForm())
   }
 }
 

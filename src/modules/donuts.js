@@ -38,12 +38,32 @@ const handleFlavorChange = event => {
   }
 }
 
+const ADD_NEW_DONUT = 'ADD_NEW_DONUT'
+const addNewDonut = newDonut => {
+  return {
+    type: ADD_NEW_DONUT,
+    newDonut
+  }
+}
+
+const CLEAR_FORM = 'CLEAR_FORM'
+const clearForm = clearForm => {
+  return {
+    type: CLEAR_FORM,
+  }
+}
+
 const donuts = (state = initialState, action) => {
   switch(action.type) {
+    case ADD_NEW_DONUT:
+      const newDonuts = state.donutOrderList.concat(action.newDonut)
+      return { ...state, donutOrderList: newDonuts }
     case HANDLE_NAME_CHANGE:
       return { ...state, name: action.newName }
     case HANDLE_FLAVOR_CHANGE:
       return { ...state, flavor: action.newFlavor }
+    case CLEAR_FORM:
+      return { ...state, name: '', flavor: '' }
     default:
       return state
   }
@@ -54,5 +74,7 @@ const donuts = (state = initialState, action) => {
 export {
   donuts,
   handleNameChange,
-  handleFlavorChange
+  handleFlavorChange,
+  addNewDonut,
+  clearForm
 };
