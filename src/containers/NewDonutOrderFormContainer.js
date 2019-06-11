@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import InputField from '../components/InputField'
+import { handleNameChange, handleFlavorChange, addNewDonut, clearForm } from '../modules/donuts'
 
 class NewDonutOrderFormContainer extends Component {
   constructor(props) {
@@ -23,10 +24,14 @@ class NewDonutOrderFormContainer extends Component {
 
   handleFormSubmit(event) {
     event.preventDefault()
-
-    // Your code here
-    // First, prepare a new donut order object
-    // Then, add that object to the store, and clear the form
+    const newId = this.calculateNewId()
+    const newDonut = {
+      id: newId,
+      name: this.props.name,
+      flavor: this.props.flavor
+    }
+    this.props.addNewDonut(newDonut)
+    this.props.clearForm()
   }
 
   render() {
@@ -39,13 +44,16 @@ class NewDonutOrderFormContainer extends Component {
             label='Your Name'
             type='text'
             name='newName'
+            value={this.props.name}
+            handleChange={this.props.handleNameChange}
           />
           <InputField
             key='newFlavor'
             label='Flavor'
             type='text'
             name='newFlavor'
-            handleChange={this.props.handleFieldChange}
+            value={this.props.flavor}
+            handleChange={this.props.handleFlavorChange}
           />
           <input type='submit' />
         </form>
@@ -54,4 +62,24 @@ class NewDonutOrderFormContainer extends Component {
   }
 };
 
-export default NewDonutOrderFormContainer;
+const mapStateToProps = (state) => {
+  return {
+    name: state.donuts.name,
+    flavor: state.donuts.flavor,
+    donutOrderList: state.donuts.donutOrderList
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addNewDonut: (donuts) => dispatch(addNewDonut(donuts)),
+    handleNameChange: (event) => dispatch(handleNameChange(event)),
+    handleFlavorChange: (event) => dispatch(handleFlavorChange(event)),
+    clearForm: () => dispatch(clearForm())
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewDonutOrderFormContainer);
